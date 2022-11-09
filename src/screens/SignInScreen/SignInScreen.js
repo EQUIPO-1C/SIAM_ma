@@ -6,6 +6,22 @@ import CustomButton from '../../components/CustomButton'
 import CustomTitle from '../../components/CustomTitle'
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
+import BasicDataScreen from '../BasicDataScreen'
+import { AsyncStorage } from 'react-native';
+
+_storeData = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem(
+      '@key',
+      value
+    );
+
+  } catch (error) {
+    console.log(error)
+  }
+};
+
 
 const SignInScreen = () => {
     const[username, setUsername] = useState('');
@@ -14,9 +30,12 @@ const SignInScreen = () => {
     const {height} = useWindowDimensions
     const navigation = useNavigation();
 
+    
     const onSignInPressed = ()=>{
         console.warn('Ha ingresado a la APP SIAM')
-        navigation.navigate('BasicData')
+        _storeData(username)
+        navigation.navigate('BasicData',{username})
+        
         
     }
 
@@ -37,17 +56,19 @@ const SignInScreen = () => {
       placeholder="Nombre de usuario" 
       value ={username}
        setValue={setUsername}
+       onChangeText={newUsername => setUsername(newUsername)}
        />
       <CustomInput 
       placeholder="Contraseña" 
       value ={password}
         setValue={setPassword}
         secureTextEntry={true}
+        onChangeText={newPassword => setUsername(newPassword)}
        
        />
        <CustomButton text="Ingresar" onPress={onSignInPressed}/>
       
-      
+       
     </View>
   )
 }

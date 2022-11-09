@@ -5,22 +5,44 @@ import { View, Text,Image, StyleSheet,useWindowDimensions,Pressable,ScrollView }
 import React, {useState} from 'react'
 import CustomButton from '../../components/CustomButton'
 import { StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
-
+import { useNavigation, useRoute } from '@react-navigation/native'
+import SignInScreen from '../SignInScreen';
 
 import { BasicData_QUERY } from '../../gql/QueryBasicData'
 import { useQuery } from '@apollo/client'
+import { AsyncStorage } from 'react-native';
+
+_retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      // We have data!!
+      console.log(value)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+};
 
 
-export default function BasicDataScreen(props) {
 
-  const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:"bdleons"},})
+export default function BasicDataScreen() {
+  
+  const route = useRoute();
+  //JSON.stringify(value)
+  console.log(JSON.stringify(_retrieveData('@key')))
 
+  const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:'bdleons'},})
+  
   if (loading) {
       return <Text>Fetching data...</Text> //while loading return this
     }
     console.log("***********")
     console.log(data.getAllUserInfo)
+    
+    
+    
+
 /*
 const DATA = data.getAllUserInfo
   return (

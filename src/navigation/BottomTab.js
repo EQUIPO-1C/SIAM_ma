@@ -5,7 +5,7 @@ import BasicDataScreen from '../screens/BasicDataScreen';
 import SignInScreen from '../screens/SignInScreen';
 
 import Icon from 'react-native-vector-icons/Entypo';
-
+import { AsyncStorage } from 'react-native';
 
 import React from 'react'
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,7 @@ return(
     screenOptions={({route}) => ({
         tabBarIcon: ({color}) => screenOptions(route,color),
         headerShown: false
-      })}
+      })} 
       tabBarOptions={{
         activeTintColor: "#000",
         activeBackgroundColor: "#FFF",
@@ -49,10 +49,13 @@ return(
       }}
   >
         
-        <Tab.Screen name ={'BasicData'} component={BasicDataScreen} />
+       
+        
+         <Tab.Screen name ={'BasicData'} component={BasicDataScreen} />
         <Tab.Screen name ={"TakenCourses"} component={Taken_coursesScreen}/>
         <Tab.Screen name ={"Schedule"} component={ScheduleScreen}/>
-        <Tab.Screen name = {"SignIn"} component={SignInScreen} options={{tabBarStyle: { display: "none" }}}/>
+        <Tab.Screen onPressed={AsyncStorage.multiRemove(['username'], (err) => {})} 
+        name = {"SignIn"} component={SignInScreen} options={{tabBarStyle: { display: "none" }}}/>
 </Tab.Navigator>
 
 );
