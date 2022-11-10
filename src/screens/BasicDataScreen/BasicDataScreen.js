@@ -46,8 +46,8 @@ export default function BasicDataScreen({navigation,route}) {
   if (loading) {
       return <Text>Fetching data...</Text> //while loading return this
     }
-    console.log("***********")
-    console.log(data.getAllUserInfo)
+    //console.log("***********")
+    //console.log(data.getAllUserInfo)
     
     
     
