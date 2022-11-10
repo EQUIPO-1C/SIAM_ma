@@ -13,26 +13,24 @@ import { useQuery } from '@apollo/client'
 import { AsyncStorage } from 'react-native';
 
 
+let variable=''
 
-
+const _retrieveData = async (key) => {
+  
+  try {
+    const value = await AsyncStorage.getItem(key)
+    console.log(typeof value)
+    variable=value
+    return value
+  } catch (e) {
+    console.log(e)
+  }
+ 
+}
 export default function BasicDataScreen({navigation,route}) {
   
 
 
-const _retrieveData = async (key) => {
-  let decodedData
-  try {
-    const jsonValue = await AsyncStorage.getItem(key).then(
-      (result) => {
-        decodedData = result
-      }
-    )
-  } catch (e) {
-    console.log(e)
-  }
-  
-  return decodedData
-}
 
 
   //const route = useRoute();
@@ -43,7 +41,7 @@ const _retrieveData = async (key) => {
   //let username=route.params.username
   const image = { uri: "https://bogota.unal.edu.co/web/html/imagenes/QsqV5UA4_400x400.jpg" };
   const usuario = 'bdleons'
-  const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:usuario},})
+  const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:variable},})
   
   if (loading) {
       return <Text>Fetching data...</Text> //while loading return this
