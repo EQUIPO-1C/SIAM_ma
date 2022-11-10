@@ -14,28 +14,32 @@ import { AsyncStorage } from 'react-native';
 
 
 
-_retrieveData = async (key) => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      // We have data!!
-      value.then(value)
-      console.log(value)
-    }
-  } catch (error) {
-    console.log(error)
-  }
-  
-};
-
-
 
 export default function BasicDataScreen({navigation,route}) {
   
+
+
+const _retrieveData = async (key) => {
+  let decodedData
+  try {
+    const jsonValue = await AsyncStorage.getItem(key).then(
+      (result) => {
+        decodedData = result
+      }
+    )
+  } catch (e) {
+    console.log(e)
+  }
+  
+  return decodedData
+}
+
+
   //const route = useRoute();
   //JSON.stringify(value)
   //console.log('whyyy')
-  const data2=JSON.stringify(_retrieveData('@key'))
+  _retrieveData('@key')
+
   //let username=route.params.username
   const image = { uri: "https://bogota.unal.edu.co/web/html/imagenes/QsqV5UA4_400x400.jpg" };
   const usuario = 'bdleons'
