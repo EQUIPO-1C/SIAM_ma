@@ -23,7 +23,7 @@ _storeData = async (value) => {
 };
 
 
-const SignInScreen = (props) => {
+const SignInScreen = () => {
     const[username, setUsername] = useState('');
     const[password, setPassword] = useState('');
     
