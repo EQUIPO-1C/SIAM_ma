@@ -23,7 +23,7 @@ _storeData = async (value) => {
 };
 
 
-const SignInScreen = () => {
+const SignInScreen = (props) => {
     const[username, setUsername] = useState('');
     const[password, setPassword] = useState('');
     
@@ -67,9 +67,7 @@ const SignInScreen = () => {
         onChangeText={newPassword => setUsername(newPassword)}
        
        />
-       <CustomButton text="Ingresar" onPress={()=> {this.props.navigation.navigate('BasicData', {
-            username
-          })}}/>
+       <CustomButton text="Ingresar" onPress={onSignInPressed}/>
       
        
     </View>

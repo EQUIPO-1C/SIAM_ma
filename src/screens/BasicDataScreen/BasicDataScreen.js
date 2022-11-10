@@ -1,7 +1,7 @@
 
 import { DataNavigation } from 'react-data-navigation';
 
-import { View, Text,Image, StyleSheet,useWindowDimensions,Pressable,ScrollView } from 'react-native'
+import { ImageBackground,View, Text,Image, StyleSheet,useWindowDimensions,Pressable,ScrollView } from 'react-native'
 import React, {useState} from 'react'
 import CustomButton from '../../components/CustomButton'
 import { StatusBar } from 'react-native';
@@ -37,7 +37,7 @@ export default function BasicDataScreen({navigation,route}) {
   //console.log('whyyy')
   const data2=JSON.stringify(_retrieveData('@key'))
   //let username=route.params.username
-  
+  const image = { uri: "https://bogota.unal.edu.co/web/html/imagenes/QsqV5UA4_400x400.jpg" };
   const usuario = 'bdleons'
   const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:usuario},})
   
@@ -50,12 +50,17 @@ export default function BasicDataScreen({navigation,route}) {
     
     
 
-/*
+
 const DATA = data.getAllUserInfo
   return (
+    
     <View style={styles.container}>
+    
+    
       <View style={styles.content}>
+      
         <ScrollView showsVerticalScrollIndicator={false}>
+        
           <Text style={{fontSize:20, fontWeight:'bold'}}>Datos Básicos</Text>
           <View style={styles.profileText}>
             <Text style={styles.profileTitle}>Nombre</Text>
@@ -93,11 +98,17 @@ const DATA = data.getAllUserInfo
             <Text style={styles.profileTitle}>Situación militar</Text>
             <Text style={{alignSelf:'flex-end'}}>{DATA.militarySituation}</Text>
           </View>
+          
          </ScrollView>
+         
       </View>  
+      
     </View>
+    
+    
+    
   )
-*/
+
 
 
 
@@ -105,8 +116,9 @@ const DATA = data.getAllUserInfo
 
 const styles = StyleSheet.create({
     container:{
-      backgroundColor:'#b7b7bd',
-      height:'100%'
+      
+      height:'100%',
+       
     },
     text:{
       fontSize:15,
@@ -132,7 +144,7 @@ const styles = StyleSheet.create({
       paddingVertical:5,
       paddingHorizontal:10,
       borderBottomWidth:1,
-      borderBottomColor:'#009B86',
+      
       borderRadius:10,
       marginHorizontal:5,
       justifyContent:'flex-end',
