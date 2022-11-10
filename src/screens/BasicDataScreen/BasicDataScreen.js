@@ -1,5 +1,5 @@
 
-
+import { DataNavigation } from 'react-data-navigation';
 
 import { View, Text,Image, StyleSheet,useWindowDimensions,Pressable,ScrollView } from 'react-native'
 import React, {useState} from 'react'
@@ -12,27 +12,34 @@ import { BasicData_QUERY } from '../../gql/QueryBasicData'
 import { useQuery } from '@apollo/client'
 import { AsyncStorage } from 'react-native';
 
+
+
 _retrieveData = async (key) => {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value !== null) {
       // We have data!!
+      value.then(value)
       console.log(value)
     }
   } catch (error) {
     console.log(error)
   }
+  
 };
 
 
 
-export default function BasicDataScreen() {
+export default function BasicDataScreen({navigation,route}) {
   
-  const route = useRoute();
+  //const route = useRoute();
   //JSON.stringify(value)
-  console.log(JSON.stringify(_retrieveData('@key')))
-
-  const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:'bdleons'},})
+  //console.log('whyyy')
+  const data2=JSON.stringify(_retrieveData('@key'))
+  //let username=route.params.username
+  
+  const usuario = 'bdleons'
+  const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:usuario},})
   
   if (loading) {
       return <Text>Fetching data...</Text> //while loading return this

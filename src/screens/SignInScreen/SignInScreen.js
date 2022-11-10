@@ -34,6 +34,7 @@ const SignInScreen = () => {
     const onSignInPressed = ()=>{
         console.warn('Ha ingresado a la APP SIAM')
         _storeData(username)
+        bar=username
         navigation.navigate('BasicData',{username})
         
         
@@ -66,7 +67,9 @@ const SignInScreen = () => {
         onChangeText={newPassword => setUsername(newPassword)}
        
        />
-       <CustomButton text="Ingresar" onPress={onSignInPressed}/>
+       <CustomButton text="Ingresar" onPress={()=> {this.props.navigation.navigate('BasicData', {
+            username
+          })}}/>
       
        
     </View>

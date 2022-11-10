@@ -1,58 +1,43 @@
+import React from 'react'
+import { ASIGNATURA_QUERY } from '../../gql/QueryAsignaturas'
+import { useQuery } from '@apollo/client'
+import {View,Text,StyleSheet,ScrollView} from 'react-native'
 
 
+export default function Taken_coursesScreen(props) {
 
-import { View, Text,Image, StyleSheet,useWindowDimensions } from 'react-native'
-import React, {useState} from 'react'
-import CustomButton from '../../components/CustomButton'
-import { StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
+const{data,loading}= useQuery(ASIGNATURA_QUERY)
 
-
-
-
-
-
-const Taken_coursesScreen = () => {
-  
-  const navigation = useNavigation();
-  const[password, setPassword] = useState('');
-  
-  const {height} = useWindowDimensions
-  const onSignInPressed = ()=>{
-      //console.warn('Ha ingresado a la APP SIAM')
-      
-      navigation.navigate('BasicData')
+if (loading) {
+    return <Text>Fetching data...</Text> //while loading return this
   }
-return (
-  <View 
-  style={styles.root}>
-  
-    <StatusBar
-      backgroundColor="#a81933"
-      barStyle="light-content"
-    />
-  
-   <CustomButton
-      text="Ingresar" onPress={onSignInPressed}
-    />
-    
-    
+  console.log("***********")
+  console.log(data)
+
+const DATA = data.allAsignaturas
+  return (
+    <View style={styles.container}>
+    {data.allAsignaturas.map((data) => {
+      return (
+        <View>
+          <Text style={styles.item}>{data.codigoasignatura}</Text>
+          <Text style={styles.item}>{data.nombreAsignatura}</Text>
+        </View>
+      );
+    })}
   </View>
-)
+
+  )
 }
 
 const styles = StyleSheet.create({
-  root:{
-      alignItems: 'center',
-      padding:10,
+  container: {
+    flex: 1,
+    padding: 50,
   },
-logo: {
-      width: '115%',
-      height: '40%',
-      marginVertical: 25,
-
-},
-
-})
-
-export default Taken_coursesScreen
+  item: {
+    padding: 20,
+    fontSize: 15,
+    marginTop: 5,
+  }
+});
