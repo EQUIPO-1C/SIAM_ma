@@ -13,10 +13,10 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name ="SignIn" component={SignInScreen}/>
-        <Stack.Screen name ="TakenCourses" component={Taken_coursesScreen}/>
-        <Stack.Screen name ="Schedule" component={ScheduleScreen}/>
-        <Stack.Screen name ="BasicData" component={BasicDataScreen}/>
+        <Stack.Screen name ="Salir" component={SignInScreen}/>
+        <Stack.Screen name ="Asignaturas inscritas" component={Taken_coursesScreen}/>
+        <Stack.Screen name ="Horario" component={ScheduleScreen}/>
+        <Stack.Screen name ="Perfil" component={BasicDataScreen}/>
         
         </Stack.Navigator>
     </NavigationContainer>
