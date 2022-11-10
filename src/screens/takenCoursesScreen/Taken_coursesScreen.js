@@ -20,7 +20,8 @@ const DATA = data.allAsignaturas
     
     <ScrollView style={styles.container}>
       <Text style={{fontSize:30, fontWeight:'bold'}}>Asignaturas inscritas</Text>
-    {data.allAsignaturas.map((data) => {
+    { data.allAsignaturas.map((data) => {
+      
       return (
         
         <Card style={styles.item}>
@@ -39,7 +40,13 @@ const DATA = data.allAsignaturas
           
         </Card>
       );
-    })}
+    
+    
+  }
+  
+    
+    
+    )}
   </ScrollView>
 
   )

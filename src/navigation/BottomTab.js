@@ -15,6 +15,9 @@ const screenOptions = (route, color) => {
     let iconName;
   
     switch (route.name) {
+      case 'SignIn':
+        iconName = 'log-out';
+        break;
       case 'BasicData':
         iconName = 'user';
         break;
@@ -24,9 +27,7 @@ const screenOptions = (route, color) => {
       case 'TakenCourses':
         iconName = 'unread';
         break;
-        case 'SignIn':
-        iconName = 'log-out';
-        break;
+        
       default:
         break;
     }
@@ -54,7 +55,7 @@ return(
          <Tab.Screen name ={'BasicData'} component={BasicDataScreen} />
         <Tab.Screen name ={"TakenCourses"} component={Taken_coursesScreen}/>
         <Tab.Screen name ={"Schedule"} component={ScheduleScreen}/>
-        <Tab.Screen onPressed={AsyncStorage.multiRemove(['username'], (err) => {})} 
+        <Tab.Screen onPressed={AsyncStorage.multiRemove(['@key'], (err) => {})} 
         name = {"SignIn"} component={SignInScreen} options={{tabBarStyle: { display: "none" }}}/>
 </Tab.Navigator>
 

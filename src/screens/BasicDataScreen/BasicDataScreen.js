@@ -27,7 +27,7 @@ const _retrieveData = async (key) => {
   }
  
 }
-export default function BasicDataScreen({navigation,route}) {
+export default function BasicDataScreen() {
   
 
 
@@ -41,6 +41,7 @@ export default function BasicDataScreen({navigation,route}) {
   //let username=route.params.username
   const image = { uri: "https://bogota.unal.edu.co/web/html/imagenes/QsqV5UA4_400x400.jpg" };
   const usuario = 'bdleons'
+  //const{dataAuth,loadingAuth}= useQuery(BasicData_QUERY,{variables: {username:variable},})
   const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:variable},})
   
   if (loading) {

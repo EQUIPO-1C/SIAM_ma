@@ -32,7 +32,7 @@ const SignInScreen = (props) => {
 
     
     const onSignInPressed = ()=>{
-        console.warn('Ha ingresado a la APP SIAM')
+        //console.warn('Ha ingresado a la APP SIAM')
         _storeData(username)
         bar=username
         navigation.navigate('BasicData',{username})
