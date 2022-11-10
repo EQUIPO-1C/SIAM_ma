@@ -51,12 +51,12 @@ return(
   >
         
        
-        
-         <Tab.Screen name ={'Perfil'} component={BasicDataScreen} />
-        <Tab.Screen name ={"Asignaturas inscritas"} component={Taken_coursesScreen}/>
-        <Tab.Screen name ={"Horario"} component={ScheduleScreen}/>
         <Tab.Screen onPressed={AsyncStorage.multiRemove(['@key'], (err) => {})} 
         name = {"Salir"} component={SignInScreen} options={{tabBarStyle: { display: "none" }}}/>
+        <Tab.Screen name ={'Perfil'} component={BasicDataScreen} />
+        <Tab.Screen name ={"Asignaturas inscritas"} component={Taken_coursesScreen}/>
+        <Tab.Screen name ={"Horario"} component={ScheduleScreen}/>
+        
 </Tab.Navigator>
 
 );
