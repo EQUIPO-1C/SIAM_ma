@@ -35,7 +35,7 @@ const SignInScreen = () => {
         //console.warn('Ha ingresado a la APP SIAM')
         _storeData(username)
         bar=username
-        navigation.navigate('BasicData',{username})
+        navigation.navigate('Perfil',{username})
         
         
     }
