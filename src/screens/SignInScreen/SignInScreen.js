@@ -8,14 +8,17 @@ import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import BasicDataScreen from '../BasicDataScreen'
 import { AsyncStorage } from 'react-native';
-
-_storeData = async (value) => {
+import LOGIN_MUTATION from '../../gql/QueryAuth'
+import { useQuery } from '@apollo/client'
+import{useMutation} from '@apollo/client'
+_storeData = async (value,codigo) => {
   try {
     const jsonValue = JSON.stringify(value)
     await AsyncStorage.setItem(
       '@key',
       value
     );
+
 
   } catch (error) {
     console.log(error)
@@ -32,12 +35,19 @@ const SignInScreen = () => {
 
     
     const onSignInPressed = ()=>{
+ 
+      //const[LOGIN_MUTATION,{data,loading}]= useMutation(LOGIN_MUTATION,{variables: {username:'bdleons', password:'swarchbdleons'},})
+      //console.log(data.role)
+
+  
+        
+    
+    
+
         //console.warn('Ha ingresado a la APP SIAM')
         _storeData(username)
         bar=username
         navigation.navigate('Perfil',{username})
-        
-        
     }
 
     

@@ -12,13 +12,38 @@ const ScheduleScreen = () => {
   
   const myEvents = [
     {
-      id: 2022456,
+      id: 2022453,
       description: 'AS-1',
-      startDate: new Date(2022, 11, 15, 15, 0),
-      endDate: new Date(2022, 11, 15, 15, 30),
+      startDate: new Date(2022, 11, 15, 14, 0),
+      endDate: new Date(2022, 11, 15, 16, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
+
+    {
+      id: 2022454,
+      description: 'AS-1',
+      startDate: new Date(2022, 11, 17, 14, 0),
+      endDate: new Date(2022, 11, 17, 16, 0),
+      color: '#a81933',
+      // ... more properties if needed,
+    },
+
+    {
+      id: 2022455,
+      description: 'Algoritmos-2',
+      startDate: new Date(2022, 11, 16, 12, 0),
+      endDate: new Date(2022, 11, 16, 14, 0),
+      color: '#a81933',
+      // ... more properties if needed,
+    },{
+    id: 2022457,
+      description: 'Algoritmos-2',
+      startDate: new Date(2022, 11, 18, 12, 0),
+      endDate: new Date(2022, 11, 18, 14, 0),
+      color: '#a81933',
+      // ... more properties if needed,
+    }
     // More events...
   ];
   const navigation = useNavigation();
@@ -37,7 +62,7 @@ return (
     events={myEvents}
     selectedDate={new Date(2022, 11, 15)}
     numberOfDays={7}
-    timeStep={30}
+    //timeStep={30}
   />
   
   

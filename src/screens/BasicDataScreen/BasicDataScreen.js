@@ -27,6 +27,20 @@ const _retrieveData = async (key) => {
   }
  
 }
+
+_storeData = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem(
+      '@Identification',
+      value
+    );
+
+
+  } catch (error) {
+    console.log(error)
+  }
+};
 export default function BasicDataScreen() {
   
 
@@ -55,6 +69,9 @@ export default function BasicDataScreen() {
 
 
 const DATA = data.getAllUserInfo
+_storeData(DATA.identificationNumber)
+
+
   return (
     
     <View style={styles.container}>
