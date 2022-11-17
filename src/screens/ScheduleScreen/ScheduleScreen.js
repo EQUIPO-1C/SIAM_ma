@@ -607,7 +607,7 @@ const ScheduleScreen = () => {
       startHour={6}
       allowScrollByDay="true"
       showTitle="true"
-      locale="es"
+      weekStartsOn="1"
       
     //timeStep={30}
     />
