@@ -41,17 +41,11 @@ _storeData = async (value) => {
     console.log(error)
   }
 };
-export default function BasicDataScreen() {
+export default function BasicDataScreen(props) {
   
-
-
-
-
-  //const route = useRoute();
-  //JSON.stringify(value)
-  //console.log('whyyy')
   _retrieveData('@key')
-
+  console.log('Hola')
+  console.log(variable)
   //let username=route.params.username
   const image = { uri: "https://bogota.unal.edu.co/web/html/imagenes/QsqV5UA4_400x400.jpg" };
   const usuario = 'bdleons'
@@ -61,14 +55,10 @@ export default function BasicDataScreen() {
   if (loading) {
       return <Text>Fetching data...</Text> //while loading return this
     }
-    //console.log("***********")
-    //console.log(data.getAllUserInfo)
-    
-    
-    
-
-
+   
 const DATA = data.getAllUserInfo
+console.log('------------------------------')
+console.log(DATA.identificationNumber)
 _storeData(DATA.identificationNumber)
 
 
@@ -90,6 +80,13 @@ _storeData(DATA.identificationNumber)
             <Text style={styles.profileTitle}>Apellido</Text>
             <Text style={{alignSelf:'flex-end'}}>{DATA.surname}</Text>
           </View>
+
+          <View style={[styles.profileText, {flexDirection:'row', justifyContent:'space-between'}]}>
+            <Text style={styles.profileTitle}>Documento de identidad</Text>
+            <Text style={{alignSelf:'flex-end'}}>{DATA.identificationNumber}</Text>
+            
+          </View>
+
           <View style={[styles.profileText, {flexDirection:'row', justifyContent:'space-between'}]}>
             <Text style={styles.profileTitle}>Rol</Text>
             <Text style={{alignSelf:'flex-end'}}>{DATA.role}</Text>

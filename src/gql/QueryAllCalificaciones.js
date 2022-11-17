@@ -2,7 +2,7 @@
 import { gql } from "@apollo/client";
 
 export const ALL_CALIFICACIONES_QUERY = gql`
-query{
+query allcalifacionesin{
     allcalifacionesin{
     iD_Calificacion
     codigo_Asignatura
