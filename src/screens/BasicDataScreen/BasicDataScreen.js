@@ -15,41 +15,77 @@ import { AsyncStorage } from 'react-native';
 
 let variable=''
 
-const _retrieveData = async (key) => {
+
+
+export default function BasicDataScreen ({navigation}) {
+  const _retrieveData = async (key) => {
   
-  try {
-    const value = await AsyncStorage.getItem(key)
-    console.log(typeof value)
-    variable=value
-    return value
-  } catch (e) {
-    console.log(e)
+    try {
+      const value = await AsyncStorage.getItem(key)
+      console.log(typeof value)
+      variable=value
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+   
   }
- 
-}
-
-_storeData = async (value) => {
-  try {
-    const jsonValue = JSON.stringify(value)
-    await AsyncStorage.setItem(
-      '@Identification',
-      value
-    );
-
-
-  } catch (error) {
-    console.log(error)
-  }
-};
-export default function BasicDataScreen(props) {
   
+  const _retrieveData2 = async (key) => {
+    
+    try {
+      const value = await AsyncStorage.getItem(key)
+      console.log(value)
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+   
+  }
+  _storeData = async (value, codigo) => {
+    try {
+      const jsonValue = JSON.stringify(value)
+      console.log(typeof value)
+      console.log(typeof jsonValue)
+      await AsyncStorage.setItem(
+        '@Identification',
+        jsonValue
+      );
+  
+  
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  
+
+
+  const [datoIdentificacion, setDatoIdentificacion] = useState("");
+  const getData = async (key) => {
+    let decodedData
+    try {
+      const jsonValue = await AsyncStorage.getItem(key).then(
+        (result) => {
+          decodedData = result
+        }
+      )
+    } catch (e) {
+      console.log(e)
+    }
+
+    return decodedData
+  }
+
+
+
+
   _retrieveData('@key')
-  console.log('Hola')
+  const [identificationNumberSaved, setIdentificationNumberSaved] = useState('');
+  const [variable2,setVariable2] =useState('');
+  
   console.log(variable)
-  //let username=route.params.username
   const image = { uri: "https://bogota.unal.edu.co/web/html/imagenes/QsqV5UA4_400x400.jpg" };
   const usuario = 'bdleons'
-  //const{dataAuth,loadingAuth}= useQuery(BasicData_QUERY,{variables: {username:variable},})
   const{data,loading}= useQuery(BasicData_QUERY,{variables: {username:variable},})
   
   if (loading) {
@@ -58,8 +94,20 @@ export default function BasicDataScreen(props) {
    
 const DATA = data.getAllUserInfo
 console.log('------------------------------')
+console.log('El tipo es')
+console.log(typeof DATA.identificationNumber)
 console.log(DATA.identificationNumber)
 _storeData(DATA.identificationNumber)
+const jsonData = getData('@Identification').then(
+  (decoded) => {
+    setDatoIdentificacion(decoded);
+  }
+) 
+console.log('typeof jsonData')
+console.log(typeof jsonData)
+
+
+
 
 
   return (

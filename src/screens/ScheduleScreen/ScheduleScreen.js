@@ -25,12 +25,35 @@ const _retrieveData = async (key) => {
 }
 
 
-const ScheduleScreen = () => {
-  console.warn('Ha ingresado al horario')
-  _retrieveData('Identification')
-  console.log('Variable identificacion')
-  console.log(variable)
-  const { data, loading, error } = useQuery(SCHEDULE_QUERY, { variables: { id: 12345678 }, })
+
+
+const ScheduleScreen = ({route,navigation}) => {
+  const [datoIdentificacion, setDatoIdentificacion] = useState("");
+
+  const getData = async (key) => {
+    
+    return await  AsyncStorage.getItem(key).then((response) => {
+      variable = response
+       return response});
+  }
+  
+  const jsonData = getData('@Identification').then(
+    (decoded) => {
+      setDatoIdentificacion(decoded);
+    }
+  ) 
+
+   if (datoIdentificacion == undefined){
+    return <Text>Cargando....</Text>
+  }
+console.log("----------------------------------**********")
+variable = parseInt(variable)
+console.log(typeof variable)
+console.log("----------------------------------**********")
+  
+  
+  
+  const { data, loading, error } = useQuery(SCHEDULE_QUERY, { variables: { id: variable }, })
 
   if (loading) return <Text>'Loading...';</Text>
   if (error) return <Text>`Error! ${error.message}`;</Text>
@@ -95,6 +118,9 @@ const ScheduleScreen = () => {
   ///Lunes
   var horarioInicioMateria = 0
   var horarioSalidaMateria = 0
+  var fechaInicio = 0
+  var fechaFinal = 0
+  var counter = 0
   for (var key2 in myObject2) {
 
     if (myObject2.hasOwnProperty(key2)) {
@@ -140,6 +166,8 @@ const ScheduleScreen = () => {
       //console.log(myObject2[key2].horas)
       HorarioLunes.push(myObject2[key2].materia)
       HorarioLunes.push(myObject2[key2].horas)
+      
+    
       lH.push({
         id: myObject2[key2].codmateria,
         description: myObject2[key2].materia,
@@ -148,12 +176,17 @@ const ScheduleScreen = () => {
         color: '#a81933',
         // ... more properties if needed,
       })
+    
+
       console.log(horarioInicioMateria)
       console.log(horarioSalidaMateria)
     }
     
   }
+  
   console.log(HorarioLunes)
+  console.log("lH")
+  console.log(lH)
   ////////////////////////////////////////////
   ///Martes
 
@@ -258,6 +291,7 @@ const ScheduleScreen = () => {
       //console.log(myObject2[key2].horas)
       HorarioMiercoles.push(myObject4[key4].materia)
       HorarioMiercoles.push(myObject4[key4].horas)
+      
       lH.push({
         id: myObject4[key4].codmateria,
         description: myObject4[key4].materia,
@@ -266,6 +300,7 @@ const ScheduleScreen = () => {
         color: '#a81933',
         // ... more properties if needed,
       })
+
 
     }
   }
@@ -608,6 +643,8 @@ const ScheduleScreen = () => {
       allowScrollByDay="true"
       showTitle="true"
       weekStartsOn={1}
+      locale ='es'
+      Agenda
       
     //timeStep={30}
     />

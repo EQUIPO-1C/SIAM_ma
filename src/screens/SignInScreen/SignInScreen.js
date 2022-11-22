@@ -9,7 +9,6 @@ import { useNavigation } from '@react-navigation/native'
 import BasicDataScreen from '../BasicDataScreen'
 import { AsyncStorage } from 'react-native';
 import LOGIN_MUTATION from '../../gql/QueryAuth'
-import { useMutation } from '@apollo/client'
 import { useQuery } from '@apollo/client'
 
 _storeData = async (value, codigo) => {
