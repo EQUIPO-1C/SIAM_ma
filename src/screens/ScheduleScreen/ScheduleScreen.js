@@ -9,50 +9,40 @@ import { useQuery } from '@apollo/client'
 import { AsyncStorage } from 'react-native';
 import { SCHEDULE_QUERY } from '../../gql/QuerySchedule';
 
-let variable = ''
-
-const _retrieveData = async (key) => {
-
-  try {
-    const value = await AsyncStorage.getItem(key)
-    console.log(typeof value)
-    variable = value
-    return value
-  } catch (e) {
-    console.log(e)
-  }
-
-}
+let variableId = ''
 
 
 
 
-const ScheduleScreen = ({route,navigation}) => {
+
+
+const ScheduleScreen = ({ route, navigation }) => {
   const [datoIdentificacion, setDatoIdentificacion] = useState("");
 
   const getData = async (key) => {
-    
-    return await  AsyncStorage.getItem(key).then((response) => {
-      variable = response
-       return response});
+
+    return await AsyncStorage.getItem(key).then((response) => {
+      variableId = response
+      return response
+    });
   }
-  
+
   const jsonData = getData('@Identification').then(
     (decoded) => {
       setDatoIdentificacion(decoded);
     }
-  ) 
+  )
 
-   if (datoIdentificacion == undefined){
+  if (datoIdentificacion == undefined) {
     return <Text>Cargando....</Text>
   }
-console.log("----------------------------------**********")
-variable = parseInt(variable)
-console.log(typeof variable)
-console.log("----------------------------------**********")
-  
-  
-  
+  console.log("----------------------------------**********")
+  variable = parseInt(variableId)
+  console.log(typeof variableId)
+  console.log("----------------------------------**********")
+
+
+
   const { data, loading, error } = useQuery(SCHEDULE_QUERY, { variables: { id: variable }, })
 
   if (loading) return <Text>'Loading...';</Text>
@@ -161,29 +151,82 @@ console.log("----------------------------------**********")
         default:
           console.log(`El horario de ${myObject2[key2].materia} no se encuentra en la franja`);
       }
-    
+
       //console.log(myObject2[key2].materia)
       //console.log(myObject2[key2].horas)
       HorarioLunes.push(myObject2[key2].materia)
       HorarioLunes.push(myObject2[key2].horas)
+      let diaCounter = 0
+      let dia = 1
+      let mes = 7
       
-    
-      lH.push({
-        id: myObject2[key2].codmateria,
-        description: myObject2[key2].materia,
-        startDate: new Date(2022, 10, 14, horarioInicioMateria, 0),
-        endDate: new Date(2022, 10, 14, horarioSalidaMateria, 0),
-        color: '#a81933',
-        // ... more properties if needed,
-      })
-    
+      while (diaCounter < 126) {
+        
+        if ((mes % 2 != 0) && (dia + 7 <= 31)) {
+          lH.push({
+            id: myObject2[key2].codmateria,
+            description: myObject2[key2].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
+          lH.push({
+            id: myObject2[key2].codmateria,
+            description: myObject2[key2].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        //Para cuando me paso un mes par
+        else if ((mes % 2 == 0) && (dia + 7 > 30)) {
+          dia = -1 * (30 - (dia + 7))
+          mes = mes + 1
+          lH.push({
+            id: myObject2[key2].codmateria,
+            description: myObject2[key2].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+        //Para cuando me paso un mes impar
+        else if ((mes % 2 != 0) && ((dia + 7) > 31)) {
+          dia = -1 * (31 - (dia + 7))
+          mes = mes + 1
+
+          lH.push({
+            id: myObject2[key2].codmateria,
+            description: myObject2[key2].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+
+        diaCounter = diaCounter + 7
+        console.log(diaCounter)
+
+      }
 
       console.log(horarioInicioMateria)
       console.log(horarioSalidaMateria)
     }
-    
+
   }
-  
+
   console.log(HorarioLunes)
   console.log("lH")
   console.log(lH)
@@ -233,14 +276,84 @@ console.log("----------------------------------**********")
       //console.log(myObject2[key2].horas)
       HorarioMartes.push(myObject3[key3].materia)
       HorarioMartes.push(myObject3[key3].horas)
+      /*
       lH.push({
         id: myObject3[key3].codmateria,
         description: myObject3[key3].materia,
-        startDate: new Date(2022, 10, 15, horarioInicioMateria, 0),
-        endDate: new Date(2022, 10, 15, horarioSalidaMateria, 0),
+        startDate: new Date(2022, 7, 16, horarioInicioMateria, 0),
+        endDate: new Date(2022, 7, 16, horarioSalidaMateria, 0),
         color: '#a81933',
         // ... more properties if needed,
       })
+      */
+      let diaCounter = 0
+      let dia = 2
+      let mes = 7
+      
+      
+      while (diaCounter < 126) {
+        
+        if ((mes % 2 != 0) && (dia + 7 <= 31)) {
+          lH.push({
+            id: myObject3[key3].codmateria,
+            description: myObject3[key3].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
+          lH.push({
+            id: myObject3[key3].codmateria,
+            description: myObject3[key3].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        //Para cuando me paso un mes par
+        else if ((mes % 2 == 0) && (dia + 7 > 30)) {
+          dia = -1 * (30 - (dia + 7))
+          mes = mes + 1
+          lH.push({
+            id: myObject3[key3].codmateria,
+            description: myObject3[key3].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+        //Para cuando me paso un mes impar
+        else if ((mes % 2 != 0) && ((dia + 7) > 31)) {
+          dia = -1 * (31 - (dia + 7))
+          mes = mes + 1
+
+          lH.push({
+            id: myObject3[key3].codmateria,
+            description: myObject3[key3].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+
+        diaCounter = diaCounter + 7
+        console.log(diaCounter)
+
+      }
+     
+
+
 
     }
   }
@@ -291,15 +404,82 @@ console.log("----------------------------------**********")
       //console.log(myObject2[key2].horas)
       HorarioMiercoles.push(myObject4[key4].materia)
       HorarioMiercoles.push(myObject4[key4].horas)
-      
+      /*
       lH.push({
         id: myObject4[key4].codmateria,
         description: myObject4[key4].materia,
-        startDate: new Date(2022, 10, 16, horarioInicioMateria, 0),
-        endDate: new Date(2022, 10, 16, horarioSalidaMateria, 0),
+        startDate: new Date(2022, 7, 17, horarioInicioMateria, 0),
+        endDate: new Date(2022, 7, 17, horarioSalidaMateria, 0),
         color: '#a81933',
         // ... more properties if needed,
       })
+      */
+
+
+      let diaCounter = 0
+      let dia = 3
+      let mes = 7
+      
+      while (diaCounter < 126) {
+        
+        if ((mes % 2 != 0) && (dia + 7 <= 31)) {
+          lH.push({
+            id: myObject4[key4].codmateria,
+            description: myObject4[key4].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
+          lH.push({
+            id: myObject4[key4].codmateria,
+            description: myObject4[key4].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        //Para cuando me paso un mes par
+        else if ((mes % 2 == 0) && (dia + 7 > 30)) {
+          dia = -1 * (30 - (dia + 7))
+          mes = mes + 1
+          lH.push({
+            id: myObject4[key4].codmateria,
+            description: myObject4[key4].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+        //Para cuando me paso un mes impar
+        else if ((mes % 2 != 0) && ((dia + 7) > 31)) {
+          dia = -1 * (31 - (dia + 7))
+          mes = mes + 1
+
+          lH.push({
+            id: myObject4[key4].codmateria,
+            description: myObject4[key4].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+
+        diaCounter = diaCounter + 7
+        console.log(diaCounter)
+
+      }
 
 
     }
@@ -351,14 +531,83 @@ console.log("----------------------------------**********")
       //console.log(myObject2[key2].horas)
       HorarioJueves.push(myObject5[key5].materia)
       HorarioJueves.push(myObject5[key5].horas)
+      /*
       lH.push({
         id: myObject5[key5].codmateria,
         description: myObject5[key5].materia,
-        startDate: new Date(2022, 10, 17, horarioInicioMateria, 0),
-        endDate: new Date(2022, 10, 17, horarioSalidaMateria, 0),
+        startDate: new Date(2022, 7, 18, horarioInicioMateria, 0),
+        endDate: new Date(2022, 7, 18, horarioSalidaMateria, 0),
         color: '#a81933',
         // ... more properties if needed,
       })
+      */
+
+
+      let diaCounter = 0
+      let dia = 4
+      let mes = 7
+      while (diaCounter < 126) {
+        
+        if ((mes % 2 != 0) && (dia + 7 <= 31)) {
+          lH.push({
+            id: myObject5[key5].codmateria,
+            description: myObject5[key5].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
+          lH.push({
+            id: myObject5[key5].codmateria,
+            description: myObject5[key5].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        //Para cuando me paso un mes par
+        else if ((mes % 2 == 0) && (dia + 7 > 30)) {
+          dia = -1 * (30 - (dia + 7))
+          mes = mes + 1
+          lH.push({
+            id: myObject5[key5].codmateria,
+            description: myObject5[key5].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+        //Para cuando me paso un mes impar
+        else if ((mes % 2 != 0) && ((dia + 7) > 31)) {
+          dia = -1 * (31 - (dia + 7))
+          mes = mes + 1
+
+          lH.push({
+            id: myObject5[key5].codmateria,
+            description: myObject5[key5].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+
+        diaCounter = diaCounter + 7
+        console.log(diaCounter)
+
+      }
+
+
 
     }
   }
@@ -409,14 +658,79 @@ console.log("----------------------------------**********")
       //console.log(myObject2[key2].horas)
       HorarioViernes.push(myObject6[key6].materia)
       HorarioViernes.push(myObject6[key6].horas)
+      /*
       lH.push({
         id: myObject6[key6].codmateria,
         description: myObject6[key6].materia,
-        startDate: new Date(2022, 10, 18, horarioInicioMateria, 0),
-        endDate: new Date(2022, 10, 18, horarioSalidaMateria, 0),
+        startDate: new Date(2022, 7, 19, horarioInicioMateria, 0),
+        endDate: new Date(2022, 7, 19, horarioSalidaMateria, 0),
         color: '#a81933',
         // ... more properties if needed,
-      })
+      })*/
+
+      let diaCounter = 0
+      let dia = 5
+      let mes = 7
+      while (diaCounter < 126) {
+        
+        if ((mes % 2 != 0) && (dia + 7 <= 31)) {
+          lH.push({
+            id: myObject6[key6].codmateria,
+            description: myObject6[key6].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
+          lH.push({
+            id: myObject6[key6].codmateria,
+            description: myObject6[key6].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        //Para cuando me paso un mes par
+        else if ((mes % 2 == 0) && (dia + 7 > 30)) {
+          dia = -1 * (30 - (dia + 7))
+          mes = mes + 1
+          lH.push({
+            id: myObject6[key6].codmateria,
+            description: myObject6[key6].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+        //Para cuando me paso un mes impar
+        else if ((mes % 2 != 0) && ((dia + 7) > 31)) {
+          dia = -1 * (31 - (dia + 7))
+          mes = mes + 1
+
+          lH.push({
+            id: myObject6[key6].codmateria,
+            description: myObject6[key6].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+
+        diaCounter = diaCounter + 7
+        console.log(diaCounter)
+
+      }
 
     }
   }
@@ -467,14 +781,79 @@ console.log("----------------------------------**********")
       //console.log(myObject2[key2].horas)
       HorarioSabado.push(myObject7[key7].materia)
       HorarioSabado.push(myObject7[key7].horas)
+      /*
       lH.push({
         id: myObject7[key7].codmateria,
         description: myObject7[key7].materia,
-        startDate: new Date(2022, 10, 18, horarioInicioMateria, 0),
-        endDate: new Date(2022, 10, 18, horarioSalidaMateria, 0),
+        startDate: new Date(2022, 7, 20, horarioInicioMateria, 0),
+        endDate: new Date(2022, 7, 20, horarioSalidaMateria, 0),
         color: '#a81933',
         // ... more properties if needed,
       })
+      */
+      let diaCounter = 0
+      let dia = 6
+      let mes = 7
+      while (diaCounter < 126) {
+        
+        if ((mes % 2 != 0) && (dia + 7 <= 31)) {
+          lH.push({
+            id: myObject7[key7].codmateria,
+            description: myObject7[key7].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
+          lH.push({
+            id: myObject7[key7].codmateria,
+            description: myObject7[key7].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        //Para cuando me paso un mes par
+        else if ((mes % 2 == 0) && (dia + 7 > 30)) {
+          dia = -1 * (30 - (dia + 7))
+          mes = mes + 1
+          lH.push({
+            id: myObject7[key7].codmateria,
+            description: myObject7[key7].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+        //Para cuando me paso un mes impar
+        else if ((mes % 2 != 0) && ((dia + 7) > 31)) {
+          dia = -1 * (31 - (dia + 7))
+          mes = mes + 1
+
+          lH.push({
+            id: myObject7[key7].codmateria,
+            description: myObject7[key7].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+
+        diaCounter = diaCounter + 7
+        console.log(diaCounter)
+
+      }
 
     }
   }
@@ -523,15 +902,79 @@ console.log("----------------------------------**********")
       //console.log(myObject2[key2].materia)
       //console.log(myObject2[key2].horas)
       HorarioDomingo.push(myObject8[key8].materia)
-      HorarioDomingo.push(myObject7[key8].horas)
-      lH.push({
+      HorarioDomingo.push(myObject8[key8].horas)
+      
+      /*lH.push({
         id: myObject8[key8].codmateria,
         description: myObject8[key8].materia,
-        startDate: new Date(2022, 10, 18, horarioInicioMateria, 0),
-        endDate: new Date(2022, 10, 18, horarioSalidaMateria, 0),
+        startDate: new Date(2022, 7, 21, horarioInicioMateria, 0),
+        endDate: new Date(2022, 7, 21, horarioSalidaMateria, 0),
         color: '#a81933',
         // ... more properties if needed,
-      })
+      })*/
+      let diaCounter = 0
+      let dia = 7
+      let mes = 7
+      while (diaCounter < 126) {
+        
+        if ((mes % 2 != 0) && (dia + 7 <= 31)) {
+          lH.push({
+            id: myObject8[key8].codmateria,
+            description: myObject8[key8].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
+          lH.push({
+            id: myObject8[key8].codmateria,
+            description: myObject8[key8].materia,
+            startDate: new Date(2022, mes, dia + 7, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          dia = dia+7
+        }
+        //Para cuando me paso un mes par
+        else if ((mes % 2 == 0) && (dia + 7 > 30)) {
+          dia = -1 * (30 - (dia + 7))
+          mes = mes + 1
+          lH.push({
+            id: myObject8[key8].codmateria,
+            description: myObject8[key8].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+        //Para cuando me paso un mes impar
+        else if ((mes % 2 != 0) && ((dia + 7) > 31)) {
+          dia = -1 * (31 - (dia + 7))
+          mes = mes + 1
+
+          lH.push({
+            id: myObject8[key8].codmateria,
+            description: myObject8[key8].materia,
+            startDate: new Date(2022, mes , dia, horarioInicioMateria, 0),
+            endDate: new Date(2022, mes , dia, horarioSalidaMateria, 0),
+            color: '#a81933',
+            // ... more properties if needed,
+          })
+          //dia = dia+7
+        }
+
+
+        diaCounter = diaCounter + 7
+        console.log(diaCounter)
+
+      }
 
     }
   }
@@ -558,16 +1001,16 @@ console.log("----------------------------------**********")
     {
       id: 76678,
       description: 'SIDA',
-      startDate: new Date(2022, 10, 14, 9, 0),
-      endDate: new Date(2022, 10, 14, 11, 0),
+      startDate: new Date(2022, 7, 14, 9, 0),
+      endDate: new Date(2022, 7, 14, 11, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
     {
       id: 4566,
       description: 'Sistemas de informacion',
-      startDate: new Date(2022, 10, 14, 11, 0),
-      endDate: new Date(2022, 10, 14, 13, 0),
+      startDate: new Date(2022, 7, 14, 11, 0),
+      endDate: new Date(2022, 7, 14, 13, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
@@ -575,24 +1018,24 @@ console.log("----------------------------------**********")
     {
       id: 12345,
       description: 'POO',
-      startDate: new Date(2022, 10, 15, 9, 0),
-      endDate: new Date(2022, 10, 15, 11, 0),
+      startDate: new Date(2022, 7, 15, 9, 0),
+      endDate: new Date(2022, 7, 15, 11, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
     {
       id: 32145,
       description: 'Bases de datos',
-      startDate: new Date(2022, 10, 15, 11, 0),
-      endDate: new Date(2022, 10, 15, 13, 0),
+      startDate: new Date(2022, 7, 15, 11, 0),
+      endDate: new Date(2022, 7, 15, 13, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
     {
       id: 54634,
       description: 'Comp. Visual',
-      startDate: new Date(2022, 10, 16, 7, 0),
-      endDate: new Date(2022, 10, 16, 9, 0),
+      startDate: new Date(2022, 7, 16, 7, 0),
+      endDate: new Date(2022, 7, 16, 9, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
@@ -600,32 +1043,32 @@ console.log("----------------------------------**********")
     {
       id: 76678,
       description: 'SIDA',
-      startDate: new Date(2022, 10, 16, 9, 0),
-      endDate: new Date(2022, 10, 16, 11, 0),
+      startDate: new Date(2022, 7, 16, 9, 0),
+      endDate: new Date(2022, 7, 16, 11, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
     {
       id: 4566,
       description: 'Sistemas de informacion',
-      startDate: new Date(2022, 10, 16, 11, 0),
-      endDate: new Date(2022, 10, 16, 13, 0),
+      startDate: new Date(2022, 7, 16, 11, 0),
+      endDate: new Date(2022, 7, 16, 13, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
     {
       id: 12345,
       description: 'POO',
-      startDate: new Date(2022, 10, 17, 9, 0),
-      endDate: new Date(2022, 10, 17, 11, 0),
+      startDate: new Date(2022, 7, 17, 9, 0),
+      endDate: new Date(2022, 7, 17, 11, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
     {
       id: 32145,
       description: 'Bases de datos',
-      startDate: new Date(2022, 10, 17, 11, 0),
-      endDate: new Date(2022, 10, 17, 13, 0),
+      startDate: new Date(2022, 7, 17, 11, 0),
+      endDate: new Date(2022, 7, 17, 13, 0),
       color: '#a81933',
       // ... more properties if needed,
     },
@@ -637,15 +1080,15 @@ console.log("----------------------------------**********")
 
     <WeekView
       events={lH}
-      selectedDate={new Date(2022, 11, 15)}
+      selectedDate={new Date(2022, 7, 13)}
       numberOfDays={7}
       startHour={6}
       allowScrollByDay="true"
       showTitle="true"
       weekStartsOn={1}
-      locale ='es'
+      locale='es'
       Agenda
-      
+
     //timeStep={30}
     />
 

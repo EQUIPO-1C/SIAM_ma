@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ASIGNATURA_QUERY } from '../../gql/QueryAsignaturas'
 import { useQuery } from '@apollo/client'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
@@ -14,6 +14,7 @@ let codigoEstudiante = ''
 let dataAsignaturaByID
 let dataAsignaturaByID2=[]
 let dataCalificaciones
+let variableId = ''
 const b = []
 let a = 0;
 
@@ -72,8 +73,28 @@ catch(error){
 
 
 const   Taken_coursesScreen = ()=>{
-  console.log('Codigo')
-  console.log(codigoEstudiante)
+  const [datoIdentificacion, setDatoIdentificacion] = useState("");
+  const getData = async (key) => {
+    
+    return await  AsyncStorage.getItem(key).then((response) => {
+      variableId = response
+       return response});
+  }
+  
+  const jsonData = getData('@Identification').then(
+    (decoded) => {
+      setDatoIdentificacion(decoded);
+    }
+  ) 
+
+   if (datoIdentificacion == undefined){
+    return <Text>Cargando....</Text>
+  }
+console.log("----------------------------------**********")
+variableId = parseInt(variableId)
+console.log(variableId)
+console.log("----------------------------------**********")
+  
 
   console.log('preuba100')
   //_AsignaturaBYID(3)
@@ -118,8 +139,13 @@ const   Taken_coursesScreen = ()=>{
 
     const dataAsignaturaByIDTmp = async function (x) {
     dataAsignaturaByID = await _AsignaturaBYID(arrayCodigos[x])
-    return dataAsignaturaByID
+    //dataAsignaturaByID.then((response) => {
+     // variableId = response
+       //return response});
+       return dataAsignaturaByID
+    
     }
+
   console.log("dataAsignaturaByIDTmp")
   
   console.log(dataAsignaturaByIDTmp(a))
@@ -166,7 +192,7 @@ const   Taken_coursesScreen = ()=>{
     <ScrollView style={styles.container}>
       <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Asignaturas inscritas</Text>
       {
-        dataCalificaciones_Copy.map((counter) => {
+        dataCalificaciones.map((counter) => {
 
 
           // _AsignaturaBYID(counter.codigo_Asignatura)
@@ -176,7 +202,7 @@ const   Taken_coursesScreen = ()=>{
           //<Text style={styles.item}>Nota: {counter.definitiva_Calificacion}</Text>
           //<Text style={styles.item}>Codigo estudiante: {counter.iD_Estudiante}</Text>
 
-          if (counter.iD_Estudiante = 12345678)
+          if (counter.iD_Estudiante= variableId)
             
             
           return (
@@ -186,11 +212,11 @@ const   Taken_coursesScreen = ()=>{
                 style={{ width: '100%', height: '100%' }}
               />
               <CardTitle
-                title={counter.nombreAsignaturaIngreso}
-                subtitle={"counter.codigo_Asignatura"}
+                title={"counter.nombreAsignaturaIngreso"}
+                subtitle={counter.codigo_Asignatura}
               />
-              <Text style={styles.item}>Nota: {"counter.definitiva_Calificacion"}</Text>
-              <Text style={styles.item}>Codigo estudiante: {"counter.iD_Estudiante"}</Text>
+              <Text style={styles.item}>Nota: {counter.definitiva_Calificacion}</Text>
+              <Text style={styles.item}>Codigo estudiante: {counter.iD_Estudiante}</Text>
             </Card>
        );
         
