@@ -7,16 +7,11 @@ import { ALL_ASIGNATURA_INSCRITAS_QUERY } from '../../gql/QueryAllAsignaturas';
 import { ALL_CALIFICACIONES_QUERY } from '../../gql/QueryAllCalificaciones';
 import { ASIGNATURA_ByID_QUERY } from '../../gql/QueryAsignaturasInscritasByID';
 import { AsyncStorage } from 'react-native';
-import CustomButton from '../../components/CustomButton/CustomButton.js'
+import { ALL_CALIFICACIONES_QUERY_COMPLETE } from '../../gql/QueryAllCalificaciones'
 import { SCHEDULE_QUERY } from '../../gql/QuerySchedule';
-
 let codigoEstudiante = ''
-let dataAsignaturaByID
-let dataAsignaturaByID2=[]
-let dataCalificaciones
+let dataAsignaturaByID2 = []
 let variableId = ''
-const b = []
-let a = 0;
 
 _storeData = async (value, codigo) => {
   try {
@@ -32,157 +27,57 @@ _storeData = async (value, codigo) => {
   }
 };
 
-_retrieveData = async (key2) => {
-
-  try {
-    const value = await AsyncStorage.getItem(key2)
-    console.log(value)
-    codigoEstudiante = value
-    return value
-  } catch (e) {
-    console.log(e)
-  }
-
-}
-
-
-
-
-const _AsignaturaBYID=(id)=> {
-try{
-  const { loading, data, error } = useQuery(ASIGNATURA_ByID_QUERY, {
-    variables: { id: id },
-
-  });
+const Taken_coursesScreen = () => {
   
-  if (loading) return console.log("loading")
-  if (error) return console.log(`Error! ${error.message}`)
-
-  dataAsignaturaByID = data
-  return dataAsignaturaByID
-
-}
-
-catch(error){
-  console.log("No entro porque no se meda la sapa perra gana hp ")
-  console.log(error)}
-  
-}
-
-
-
-
-const   Taken_coursesScreen = ()=>{
   const [datoIdentificacion, setDatoIdentificacion] = useState("");
+
   const getData = async (key) => {
-    
-    return await  AsyncStorage.getItem(key).then((response) => {
+
+    return await AsyncStorage.getItem(key).then((response) => {
       variableId = response
-       return response});
+      return response
+    });
   }
-  
+
   const jsonData = getData('@Identification').then(
     (decoded) => {
       setDatoIdentificacion(decoded);
     }
-  ) 
+  )
 
-   if (datoIdentificacion == undefined){
+  if (datoIdentificacion == undefined) {
     return <Text>Cargando....</Text>
   }
-console.log("----------------------------------**********")
-variableId = parseInt(variableId)
-console.log(variableId)
-console.log("----------------------------------**********")
-  
+  console.log("----------------------------------**********")
+  variable = parseInt(variableId)
+  console.log(variableId)
+  console.log("----------------------------------**********")
 
-  console.log('preuba100')
-  //_AsignaturaBYID(3)
 
-  const { data:data, loading:loading, error:error } = useQuery(ALL_CALIFICACIONES_QUERY)
+
+  const { data, loading, error } = useQuery(ALL_CALIFICACIONES_QUERY_COMPLETE, { variables: { iD: variable }, })
+
   if (loading) return <Text>'Loading...';</Text>
   if (error) return <Text>`Error! ${error.message}`;</Text>
-  dataCalificaciones = data.allcalifacionesin
 
- 
-
-//Desde aquí
-
-
-
-  console.log('Antesss de entrar a califaciones')
-  console.log(dataCalificaciones)
-  console.log('Después de entrar a califaciones')
-  let arrayCodigos = []
-  let arrayNombres = []
-  let dataCalificaciones_Copy=[] ;
-  const dataCalificaciones_Copy2 = []
-
-
-  dataCalificaciones.map((key) => {
-    //console.log(data.asignaturainscritasById.nombre_Asignatura )
-    console.log(key.codigo_Asignatura)
-    console.log(key.definitiva_Calificacion)
-    console.log(key.iD_Estudiante)
-    arrayCodigos.push(key.codigo_Asignatura)
-
-  }
-
-  )
-  console.log(arrayCodigos)
-  
-  //let newTransaction=[];
-  
-  for (var a = 0; a <= arrayCodigos.length; a++) {
-    var i = 1
-    console.log("BEforeTmp")
-
-    const dataAsignaturaByIDTmp = async function (x) {
-    dataAsignaturaByID = await _AsignaturaBYID(arrayCodigos[x])
-    //dataAsignaturaByID.then((response) => {
-     // variableId = response
-       //return response});
-       return dataAsignaturaByID
-    
-    }
-
-  console.log("dataAsignaturaByIDTmp")
-  
-  console.log(dataAsignaturaByIDTmp(a))
-
-    
-    //console.log(dataCalificaciones[a])
-   // console.log(dataAsignaturaByID.asignaturainscritasById.nombre_Asignatura )
-
-    //arrayNombres.push(dataAsignaturaByID2.asignaturainscritasById.nombre_Asignatura)
-    
-    //console.log(dataAsignaturaByID.asignaturainscritasById.nombre_Asignatura)
-    //console.log(typeof dataCalificaciones)
-    //dataCalificaciones_Copy[0]['Nombre']=    dataAsignaturaByID.asignaturainscritasById.nombre_Asignatura
-   // dataCalificaciones_Copy[1]['Nombre']=    "Otro"
-   //(dataCalificaciones[a])['Nombre'][dataAsignaturaByID.asignaturainscritasById.nombre_Asignatura]
-
-   
-   dataCalificaciones_Copy2.push(dataCalificaciones[a])
-   const newTransactionFunction = async function (a) {
-    const newTransaction=await Object.assign({}, dataCalificaciones[a], {nombreAsignaturaIngreso: (    dataAsignaturaByIDTmp.asignaturainscritasById.nombre_Asignatura) })
-    return newTransaction
-   }
-  dataCalificaciones_Copy.push(newTransactionFunction())
-  console.log( dataCalificaciones_Copy)
-  i++
-  
-  
-   }
-  
-   
-  console.log(arrayNombres)
-  console.log( dataCalificaciones_Copy)
-  
+  //console.log("Sqlida del horario")
   
 
-  
- //Hasta aqui
+  //console.log("Sqlida del horario")
+  //console.log(data.calificacionesinByIDEst)
+  //dataCalificaciones = data.calificacionesinByIDEst
+  console.log("Nombres")
+  const DATA = data.calificacionesinByIDEst
+  console.log(data.calificacionesinByIDEst)
+
+
+
+
+
+
+
+
+  //Hasta aqui
 
 
 
@@ -190,9 +85,10 @@ console.log("----------------------------------**********")
 
 
     <ScrollView style={styles.container}>
-      <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Asignaturas inscritas</Text>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', padding: 20 }}>Asignaturas inscritas:{DATA[0].iD_Estudiante}</Text>
+      
       {
-        dataCalificaciones.map((counter) => {
+        DATA.map((counter) => {
 
 
           // _AsignaturaBYID(counter.codigo_Asignatura)
@@ -202,9 +98,9 @@ console.log("----------------------------------**********")
           //<Text style={styles.item}>Nota: {counter.definitiva_Calificacion}</Text>
           //<Text style={styles.item}>Codigo estudiante: {counter.iD_Estudiante}</Text>
 
-          if (counter.iD_Estudiante= variableId)
-            
-            
+          //if (counter.iD_Estudiante= variableId)
+
+
           return (
             <Card style={styles.item}>
               <CardImage
@@ -212,20 +108,27 @@ console.log("----------------------------------**********")
                 style={{ width: '100%', height: '100%' }}
               />
               <CardTitle
-                title={"counter.nombreAsignaturaIngreso"}
-                subtitle={counter.codigo_Asignatura}
+                title={counter.nombre_Asignatura}
+                
+                
+
               />
+              <Text style={styles.item}>Código de la asignatura: {counter.codigo_Asignatura}</Text>
+              <Text style={styles.item}>Grupo: {counter.numero_Grupo_Asignatura}</Text>
               <Text style={styles.item}>Nota: {counter.definitiva_Calificacion}</Text>
               <Text style={styles.item}>Codigo estudiante: {counter.iD_Estudiante}</Text>
+              <Text style={styles.item}>Créditos: {counter.creditos_Asignatura}</Text>
+              <Text style={styles.item}>Porcentajes: {counter.porcentajes_Calificaciones}</Text>
+    
             </Card>
-       );
-        
+          );
+
         }
-        
-        
+
+
 
         )}
-      
+
 
     </ScrollView>
 
@@ -244,10 +147,12 @@ const styles = StyleSheet.create({
 
   },
   item: {
-    padding: 20,
+    padding: 5,
     fontSize: 15,
     marginTop: 5,
     borderRadius: 10,
+    fontSize: 18,
+    
 
   },
 

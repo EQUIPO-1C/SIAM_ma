@@ -25,7 +25,7 @@ import Navigation from './src/navigation'
 import { BottomTab } from './src/navigation/BottomTab';
 import ScheduleScreen from './src/screens/ScheduleScreen';
 const client2 = new ApolloClient({
-  uri: 'http://192.168.10.3:80/graphql',
+  uri: 'http://192.168.10.4:5001/graphql',
   cache: new InMemoryCache()
 });
 const App= Node = ({navigation}) => {

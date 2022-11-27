@@ -12,7 +12,19 @@ import { SCHEDULE_QUERY } from '../../gql/QuerySchedule';
 let variableId = ''
 
 
-
+const onSignInPressed = (parameter) => {
+  console.warn(parameter)
+  return 
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      ></Modal>
+}
 
 
 
@@ -159,7 +171,7 @@ const ScheduleScreen = ({ route, navigation }) => {
       let diaCounter = 0
       let dia = 1
       let mes = 7
-      
+      onSignInPressed(myObject2[key2])
       while (diaCounter < 126) {
         
         if ((mes % 2 != 0) && (dia + 7 <= 31)) {
@@ -170,7 +182,10 @@ const ScheduleScreen = ({ route, navigation }) => {
             endDate: new Date(2022, mes, dia + 7, horarioSalidaMateria, 0),
             color: '#a81933',
             // ... more properties if needed,
+            
           })
+          
+          
           dia = dia+7
         }
         else if ((mes % 2 == 0) && (dia + 7 <= 30)) {
@@ -1087,7 +1102,7 @@ const ScheduleScreen = ({ route, navigation }) => {
       showTitle="true"
       weekStartsOn={1}
       locale='es'
-      Agenda
+      onEventPress={onSignInPressed}
 
     //timeStep={30}
     />

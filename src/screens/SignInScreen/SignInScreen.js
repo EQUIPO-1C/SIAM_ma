@@ -75,7 +75,7 @@ const SignInScreen = () => {
         setValue={setPassword}
         secureTextEntry={true}
         onChangeText={newPassword => setUsername(newPassword)}
-
+        
       />
       <CustomButton text="Ingresar" onPress={onSignInPressed} />
 
