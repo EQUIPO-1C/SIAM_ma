@@ -1095,8 +1095,8 @@ const ScheduleScreen = ({ route, navigation }) => {
 
     <WeekView
       events={lH}
-      selectedDate={new Date(2022, 7, 13)}
-      numberOfDays={7}
+      selectedDate={new Date(2022, 7, 15)}
+      numberOfDays={5}
       startHour={6}
       allowScrollByDay="true"
       showTitle="true"
