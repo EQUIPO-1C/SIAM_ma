@@ -9,9 +9,20 @@ import { useQuery } from '@apollo/client'
 import { AsyncStorage } from 'react-native';
 import { SCHEDULE_QUERY } from '../../gql/QuerySchedule';
 
+
+
 let variableId = ''
-
-
+function WrapperComponent() {
+  return (
+    <View>
+      <Modal isVisible={true}>
+        <View style={{ flex: 1 }}>
+          <Text>I am the modal content!</Text>
+        </View>
+      </Modal>
+    </View>
+  );
+}
 const onSignInPressed = (parameter) => {
   console.warn(parameter)
   return 
@@ -1091,6 +1102,7 @@ const ScheduleScreen = ({ route, navigation }) => {
   ];
 
   return (
+
 
 
     <WeekView

@@ -13,7 +13,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name ="Salir" component={SignInScreen}/>
+        <Stack.Screen name ="Salir" component={SignInScreen} onPressed={startReload} />
         <Stack.Screen name ="Asignaturas inscritas" component={Taken_coursesScreen}/>
         <Stack.Screen name ="Horario" component={ScheduleScreen}/>
         <Stack.Screen name ="Perfil" component={BasicDataScreen}/>

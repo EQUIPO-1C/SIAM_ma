@@ -39,10 +39,10 @@ const SignInScreen = () => {
   //const Data = data.loginSiamUser
   //console.log(Data.token)
 
-
+  console.log('Volvi a iniciar')
   const onSignInPressed = () => {
 
-
+    
     //console.warn('Ha ingresado a la APP SIAM')
     _storeData(username)
     bar = username
